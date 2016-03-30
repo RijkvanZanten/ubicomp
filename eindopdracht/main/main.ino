@@ -23,7 +23,7 @@ const int maxScore = 100;
 
 int points = 0;
 
-int currentColor = 0;
+int currentColor = -1;
   // Colors: 
   //   - White: 0,
   //   - Red: 1,
@@ -53,20 +53,22 @@ void setLampColor(int color) {
     case 0:
       rgb(255,255,255);
       whichButtonToListenTo = whiteButtonPin;
+      currentColor = 0;
       break;
     case 1:
       rgb(255, 0, 0);
       whichButtonToListenTo = redButtonPin;
+      currentColor = 1;
       break;
     case 2:
       rgb(0, 0, 255);
       whichButtonToListenTo = blueButtonPin;
+      currentColor = 2;
       break;
     default:
       rgb(0,0,0);
       break;
   }
-  currentColor = 0;
 }
 
 void loop() {  
@@ -82,8 +84,15 @@ void loop() {
   }
 
   if(currentMillis - previousLampMillis >= lampInterval(points)) {
-    previousLampMillis = currentMillis;
-    setLampColor(random(0, 3));
+    int randomColor = random(0, 3);
+    if(randomColor == currentColor) {
+      while(randomColor == currentColor) {
+        randomColor = random(0, 3);
+      }
+    } else {
+      setLampColor(randomColor);
+      previousLampMillis = currentMillis;
+    }
     Serial.println("verander lamp");
   }
   
