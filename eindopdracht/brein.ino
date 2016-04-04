@@ -16,8 +16,8 @@
   // Settings
   const int startSpeed = 7500;
   const int endSpeed = 3500;
-  const int scoreInterval = 1000;
-  const int maxIdleTime = 15;
+  const int scoreInterval = 450;
+  const int maxIdleTime = 50; // maxIdleTime * scoreInterval = waiting time
   
   // Pins
   const int rgbLED[3] = {9, 10, 11};
